@@ -1,0 +1,10 @@
+
+]	java:S125"<This block of commented-out lines of code should be removed.(¾ñÅ¢ıÿÿÿÿ8ÜÆ³Áã1
+‚
+java:S1128"`Remove this unused import 'com.indiasekeukenservices.inventoryservice.data.InventoryRepository'.(óŸÉşüÿÿÿÿ8æöûìã1
+u
+java:S1128"XRemove this unused import 'com.indiasekeukenservices.inventoryservice.domain.Inventory'.(§–¶±8æöûìã1
+d
+java:S1128"GRemove this unused import 'org.springframework.boot.CommandLineRunner'.(È—ÿÅ8æöûìã1
+e
+java:S1128	"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Ş8æöûìã1
