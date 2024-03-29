@@ -1,14 +1,3 @@
 
-W	java:S125"<This block of commented-out lines of code should be removed.(ñ™¾>8Ì’‚Èã1
-T
-java:S1135""2Complete the task associated to this TODO comment.(Ÿ¶ şÿÿÿÿ8ãô„Èã1
-]	java:S125>"<This block of commented-out lines of code should be removed.(÷ìÊ¸ùÿÿÿÿ8Ğ’‚Èã1
-‹
-java:S1128"nRemove this unused import 'com.indiasekeukenservices.orderservice.presentation.dto.request.InventoryResponse'.(÷¶ê‡8Ñ’‚Èã1
-S
-java:S1128
-"7Remove this unused import 'io.micrometer.tracing.Span'.(”èÖ`8Ò’‚Èã1
-y
-java:S1128"WRemove this unused import 'org.springframework.web.reactive.function.client.WebClient'.(¬à•ıÿÿÿÿ8Ò’‚Èã1
-O
-java:S1128"-Remove this unused import 'java.util.Arrays'.(î–˜Éüÿÿÿÿ8Ò’‚Èã1
+]	java:S125#"<This block of commented-out lines of code should be removed.(Şäîùøÿÿÿÿ8­ö²âè1
+]	java:S125z"<This block of commented-out lines of code should be removed.(÷ìÊ¸ùÿÿÿÿ8ğ¡Íâè1

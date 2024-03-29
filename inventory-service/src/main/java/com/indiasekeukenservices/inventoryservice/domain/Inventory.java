@@ -21,4 +21,5 @@ public class Inventory {
     private Long id;
     private String productId;
     private Boolean inStock;
+    private ProductType productType;
 }

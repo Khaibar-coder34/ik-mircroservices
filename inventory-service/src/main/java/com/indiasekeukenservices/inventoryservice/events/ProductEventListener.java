@@ -25,6 +25,7 @@ public class ProductEventListener {
         Inventory inventory = new Inventory();
         inventory.setProductId(event.getId());
         inventory.setInStock(true);
+        inventory.setProductType(event.getProductType());
 
         inventoryRepository.save(inventory);
         log.info("PRODUCT SAVED in Inventory record for product ID: " + event.getId());

@@ -1,5 +1,6 @@
 package com.indiasekeukenservices.productservice.presentation.dto.response;
 
+import com.indiasekeukenservices.productservice.domain.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +17,5 @@ public class ProductResponse {
     private String name;
     private String description;
     private BigDecimal price;
+    private ProductType productType;
 }

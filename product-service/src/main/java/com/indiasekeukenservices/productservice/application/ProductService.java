@@ -37,6 +37,7 @@ public class ProductService {
                 .name(productRequest.getName())
                 .description(productRequest.getDescription())
                 .price(productRequest.getPrice())
+                .productType(productRequest.getProductType())
                 .build();
 
         product = productRepository.save(product);
@@ -47,16 +48,13 @@ public class ProductService {
                 product.getId(),
                 product.getName(),
                 product.getDescription(),
-                product.getPrice()
+                product.getPrice(),
+                product.getProductType()
         );
 
         kafkaTemplate.send("productCreatedTopic", event);
         log.info("Product {} is SENDED to INVENTORY-SERVICE", product.getId());
     }
-
-
-
-
 
     public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
@@ -70,6 +68,7 @@ public class ProductService {
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .productType(product.getProductType())
                 .build();
     }
 }

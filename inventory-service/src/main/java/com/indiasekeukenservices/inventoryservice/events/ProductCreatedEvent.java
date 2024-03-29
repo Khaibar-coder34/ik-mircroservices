@@ -1,5 +1,6 @@
 package com.indiasekeukenservices.inventoryservice.events;
 
+import com.indiasekeukenservices.inventoryservice.domain.ProductType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ public class ProductCreatedEvent {
     private String name;
     private String description;
     private BigDecimal price;
+    private ProductType productType;
 }
 
 

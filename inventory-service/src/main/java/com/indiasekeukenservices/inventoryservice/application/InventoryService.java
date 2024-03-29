@@ -24,6 +24,7 @@ public class InventoryService {
                         InventoryResponse.builder()
                                 .productId(inventory.getProductId())
                                 .isInStock(inventory.getInStock())
+                                .productType(inventory.getProductType())
                                 .build()
                 ).toList();
     }
