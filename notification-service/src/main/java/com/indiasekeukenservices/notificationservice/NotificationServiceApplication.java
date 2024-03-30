@@ -12,27 +12,17 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 @SpringBootApplication
 @Slf4j
-@RequiredArgsConstructor
 
 public class NotificationServiceApplication {
-
-    private final ObservationRegistry observationRegistry;
-    private final Tracer tracer;
-
-
     public static void main(String[] args) {
         SpringApplication.run(NotificationServiceApplication.class, args);
     }
 
     @KafkaListener(topics = "notificationTopic")
     public void handleNotification(OrderPlacedEvent orderPlacedEvent) {
-        Observation.createNotStarted("on-message", this.observationRegistry).observe(() -> {
-            log.info("Got message <{}>", orderPlacedEvent);
-            log.info("TraceId- {}, Received Notification for Order - {}", this.tracer.currentSpan().context().traceId(),
-                    orderPlacedEvent.getOrderNumber());
-        });
+        //todo-->  send out an email notificaiton
         log.info("Recieved notification for Order - {}", orderPlacedEvent.getOrderNumber());
-        //send  an email notificaitonn
+
 
     }
 

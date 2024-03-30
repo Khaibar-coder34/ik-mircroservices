@@ -32,8 +32,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WebClient.Builder webClientBuilder;
     private final Tracer tracer;
-//    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
-    private final ApplicationEventPublisher applicationEventPublisher;
+    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public String placeOrder(OrderRequest orderRequest) {
         Order order = createOrder(orderRequest);
@@ -97,10 +96,16 @@ public class OrderService {
 
     private void placeOrderAndSendToPreparationAreas(Order order, List<InventoryResponse> foodProducts, List<InventoryResponse> breadProducts) {
         orderRepository.save(order);
-        applicationEventPublisher.publishEvent(new OrderPlacedEvent(this, order.getOrderNumber()));
+
+        // Publiceer een event dat de bestelling is geplaatst
+        publishOrderPlacedEvent(order.getOrderNumber());
         log.info("Order placed with orderNumber: {}", order.getOrderNumber());
 
         sendProductsToRespectiveAreas(foodProducts, breadProducts);
+    }
+
+    private void publishOrderPlacedEvent(String orderNumber) {
+        kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(orderNumber));
     }
 
     private void sendProductsToRespectiveAreas(List<InventoryResponse> foodProducts, List<InventoryResponse> breadProducts) {
