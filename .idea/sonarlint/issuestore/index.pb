@@ -37,8 +37,6 @@ C
 Yapi-gateway/src/main/java/com/indiasekeukenservices/apigateway/ApiGatewayApplication.java,0/e/0ecff42a4ab58c84663e2e7515e622848c845214
 ö
 jproduct-service/src/main/java/com/indiasekeukenservices/productservice/presentation/ProductController.java,f/2/f2dd7c544cbd184f17191b7d5b1aa9aeb0ba26b6
-â
-Yapi-gateway/src/main/java/com/indiasekeukenservices/apigateway/config/SecurityConfig.java,c/4/c4553905a55d61cd09ffdc8fc3939f6fbb0deda7
 ì
 cdiscovery-server/src/main/java/com/indiasekeukenservices/discoveryserver/config/SecurityConfig.java,6/0/609fae35b5547415179cd5d5ca4b4289589ffd0f
 ú
@@ -191,3 +189,5 @@ Q.idea/sonarlint/securityhotspotstore/2/f/2f764b2c012eac9029924d81a053d6e409cb17
 Q.idea/sonarlint/securityhotspotstore/9/8/985aae4f95e5f25b49363a8e39e43dc2925f69c1,8/9/894f9397cd9e3ecbbe11b982b964a75d5716d520
 Å
 Q.idea/sonarlint/securityhotspotstore/f/8/f88194a563efb279f5dcfa7404fe84f1c435e3f7,5/c/5c52db248fc7687e9552a653febc0434ac755696
+Z
+*api-gateway/src/main/java/module-info.java,a/4/a46b97476dd481c2dc8db0380d8b1a03f4152429
