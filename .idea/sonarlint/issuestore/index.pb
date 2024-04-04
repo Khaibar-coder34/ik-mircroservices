@@ -201,10 +201,6 @@ uproduct-service/src/main/java/com/indiasekeukenservices/productservice/presenta
 bproduct-service/src/main/java/com/indiasekeukenservices/productservice/data/ProductRepository.java,2/1/2159a833ba72dc25eb5b6fee41d83399b2440856
 í
 binventory-service/src/main/java/com/indiasekeukenservices/inventoryservice/domain/ProductType.java,6/2/629a3d435eaeca33bb252ff856b4de433187669a
-ù
-mnotification-service/src/main/java/com/indiasekeukenservices/notificationservice/events/OrderPlacedEvent.java,0/6/06f2b65527f0c0f650422551ae554443133eddb6
-ô
-iorder-service/src/main/java/com/indiasekeukenservices/orderservice/listener/OrderPlacedEventListener.java,2/8/28e17ff98c11b9dcd66dc6170efd42aaef4629fe
 ñ
 fnotification-service/src/main/java/com/indiasekeukenservices/notificationservice/OrderPlacedEvent.java,2/a/2ad50761e66a62e28626ce1fa388af3a24e8e91a
 ä
