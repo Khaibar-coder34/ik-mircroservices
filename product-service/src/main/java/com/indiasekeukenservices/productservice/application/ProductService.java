@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,19 +21,8 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate;
 
-
-//    public void createProduct(ProductRequest productRequest) {
-//        Product product = Product.builder()
-//                .name(productRequest.getName())
-//                .description(productRequest.getDescription())
-//                .price(productRequest.getPrice())
-//                .build();
-//
-//        productRepository.save(product);
-//        log.info("Product {} is saved", product.getId());
-//    }
-
-    public void createProduct(ProductRequest productRequest) {
+    public ProductResponse createProduct(ProductRequest productRequest) {
+        // Create a new product from the request
         Product product = Product.builder()
                 .name(productRequest.getName())
                 .description(productRequest.getDescription())
@@ -40,10 +30,11 @@ public class ProductService {
                 .productType(productRequest.getProductType())
                 .build();
 
+        // Save the product to the database
         product = productRepository.save(product);
         log.info("Product {} is saved", product.getId());
 
-        // Maak en publiceer het ProductCreatedEvent
+        // Create and publish the ProductCreatedEvent
         ProductCreatedEvent event = new ProductCreatedEvent(
                 product.getId(),
                 product.getName(),
@@ -52,15 +43,49 @@ public class ProductService {
                 product.getProductType()
         );
 
+        // Send the event to the Kafka topic
         kafkaTemplate.send("productCreatedTopic", event);
-        log.info("Product {} is SENDED to INVENTORY-SERVICE", product.getId());
+        log.info("Product {} is SENT to INVENTORY-SERVICE", product.getId());
+
+        // Convert the product to a ProductResponse and return it
+        return mapToProductResponse(product);
     }
+
 
     public List<ProductResponse> getAllProducts() {
         List<Product> products = productRepository.findAll();
 
         return products.stream().map(this::mapToProductResponse).toList();
     }
+
+    public ProductResponse getProductById(String productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
+        return mapToProductResponse(product);
+    }
+
+    public ProductResponse updateProduct(String productId, ProductRequest productRequest) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
+
+        product.setName(productRequest.getName());
+        product.setDescription(productRequest.getDescription());
+        product.setPrice(productRequest.getPrice());
+        product.setProductType(productRequest.getProductType());
+
+        product = productRepository.save(product);
+        return mapToProductResponse(product);
+    }
+
+    public void deleteProduct(String productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id " + productId));
+        productRepository.delete(product);
+        log.info("Product {} is deleted", productId);
+    }
+
+
+
 
     private ProductResponse mapToProductResponse(Product product) {
         return ProductResponse.builder()

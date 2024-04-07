@@ -2,6 +2,7 @@ package com.indiasekeukenservices.orderservice.presentation;
 
 import com.indiasekeukenservices.orderservice.application.OrderService;
 import com.indiasekeukenservices.orderservice.presentation.dto.request.OrderRequest;
+import com.indiasekeukenservices.orderservice.presentation.dto.response.ApiResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
@@ -23,11 +24,11 @@ public class OrderController {
     @CircuitBreaker(name="inventory", fallbackMethod = "fallbackMethod")
     @TimeLimiter(name="inventory")
     @Retry(name = "inventory")
-    public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
-        return CompletableFuture.supplyAsync(()->orderService.placeOrder(orderRequest));
+    public CompletableFuture<ApiResponse> placeOrder(@RequestBody OrderRequest orderRequest) {
+        return CompletableFuture.supplyAsync(() -> new ApiResponse(orderService.placeOrder(orderRequest)));
     }
 
-    public CompletableFuture<String> fallbackMethod(RuntimeException runtimeException){
-        return CompletableFuture.supplyAsync(()-> "Oops! Something went wrong, please try again later!");
+    public CompletableFuture<ApiResponse> fallbackMethod(RuntimeException runtimeException){
+        return CompletableFuture.supplyAsync(() -> new ApiResponse("Oops! Something went wrong, please try again later!"));
     }
 }

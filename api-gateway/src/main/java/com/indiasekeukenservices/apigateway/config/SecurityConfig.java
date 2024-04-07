@@ -1,4 +1,4 @@
-s//package com.indiasekeukenservices.apigateway.config;
+//package com.indiasekeukenservices.apigateway.config;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

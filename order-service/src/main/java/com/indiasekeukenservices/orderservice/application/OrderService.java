@@ -67,8 +67,11 @@ public class OrderService {
         for (InventoryResponse response : inventoryResponses) {
             if (response.getProductType() == ProductType.FOOD) {
                 foodProducts.add(response);
+                log.info("Food products: {} ", response.getProductType());
+
             } else if (response.getProductType() == ProductType.BREAD) {
                 breadProducts.add(response);
+                log.info("Bread products: {} ", response.getProductType());
             }
         }
         log.info("Separated products: {} food products and {} bread products", foodProducts.size(), breadProducts.size());
@@ -120,97 +123,10 @@ public class OrderService {
         }
     }
 
-
-
-
-
-//    public String placeOrder(OrderRequest orderRequest) {
-//        Order order = new Order();
-//        order.setOrderNumber(UUID.randomUUID().toString());
-//
-//        List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsList()
-//                .stream()
-//                .map(this::mapToDto)
-//                .toList();
-//
-//        order.setOrderLineItemsList(orderLineItems);
-//        log.info("orderRequest in placeOrder method--> " + orderLineItems.stream().toList().toString());
-//
-//        List<String> productIds = order.getOrderLineItemsList().stream()
-//                .map(OrderLineItems::getProductId)
-//                .toList();
-//
-//        log.info("product Id's--> " + productIds);
-//
-//        Span inventoryServiceLookup = tracer.nextSpan().name("InventoryServiceLookup");
-//
-//        try (Tracer.SpanInScope spanInScope = tracer.withSpan(inventoryServiceLookup.start())){
-//
-//            // Call Inventory Service, and place order if product is in stock
-//            InventoryResponse[] inventoryResponsArray = webClientBuilder.build().get()
-//                    .uri("http://inventory-service/api/inventory",
-//                            uriBuilder -> uriBuilder.queryParam("productIds", productIds).build())
-//                    .retrieve()
-//                    .bodyToMono(InventoryResponse[].class)
-//                    .block();
-//
-//            log.info("Response from the INVENTORY-SERVICE--> " + Arrays.stream(inventoryResponsArray).toList().toString());
-//
-//            // Separate food and bread products
-//            List<InventoryResponse> foodProducts = Arrays.stream(inventoryResponsArray)
-//                    .filter(response -> response.getProductType() == ProductType.FOOD)
-//                    .toList();
-//
-//            List<InventoryResponse> breadProducts = Arrays.stream(inventoryResponsArray)
-//                    .filter(response -> response.getProductType() == ProductType.BREAD)
-//                    .toList();
-//
-//            // Check if all food and bread products are in stock
-//            boolean allFoodProductsInStock = foodProducts.stream().allMatch(InventoryResponse::isInStock);
-//            boolean allBreadProductsInStock = breadProducts.stream().allMatch(InventoryResponse::isInStock);
-//
-//            if(allBreadProductsInStock && allFoodProductsInStock){
-//                orderRepository.save(order);
-//                //Publish OrderPlacedEvent
-////                kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
-//                applicationEventPublisher.publishEvent(new OrderPlacedEvent(this, order.getOrderNumber()));
-//                log.info("Order placed with orderNumber..." + order.getOrderNumber());
-//
-//                // Logic to send food products to food preparation area and bread products to bread preparation area
-//                sendProductsToRespectiveAreas(foodProducts, breadProducts);
-//
-//                return "Order placed succesfully!!!";
-//            } else {
-//                throw new IllegalArgumentException("Product is not in stock, please try again later");
-//            }
-//
-//        } finally {
-//            inventoryServiceLookup.end();
-//        }
-//
-//    }
-//
-//    private void sendProductsToRespectiveAreas(List<InventoryResponse> foodProducts, List<InventoryResponse> breadProducts) {
-//        // Logic to send food products to food preparation area
-//        for (InventoryResponse foodProduct : foodProducts) {
-//            log.info("Sending food product " + foodProduct.getProductId() + " to food preparation area...");
-//            // Implement logic to send food product to the food preparation area
-//        }
-//
-//        // Logic to send bread products to bread preparation area
-//        for (InventoryResponse breadProduct : breadProducts) {
-//            log.info("Sending bread product " + breadProduct.getProductId() + " to bread preparation area...");
-//            // Implement logic to send bread product to the bread preparation area
-//        }
-//    }
-
-
     private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
         OrderLineItems orderLineItems = new OrderLineItems();
         orderLineItems.setQuantity(orderLineItemsDto.getQuantity());
         orderLineItems.setProductId(orderLineItemsDto.getProductId());
         return orderLineItems;
     }
-
-
 }
