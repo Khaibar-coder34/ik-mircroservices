@@ -19,9 +19,19 @@ public class NotificationServiceApplication {
     }
 
     @KafkaListener(topics = "notificationTopic")
-    public void handleNotification(OrderPlacedEvent orderPlacedEvent) {
+    public void handleNotification(OrderPlacedEvent event) {
         //todo-->  send out an email notificaiton
-        log.info("Recieved notification for Order - {}", orderPlacedEvent.getOrderNumber());
+        // Logging the detailed order event
+        log.info("Received order: Order Number: {}, Order Time: {}, Order Status: {}",
+                event.getOrderNumber(), event.getOrderTime(), event.getOrderStatus());
+
+        // If orderLineItems is not null or empty, log its details
+        if(event.getOrderLineItems() != null && !event.getOrderLineItems().isEmpty()) {
+            event.getOrderLineItems().forEach(item -> {
+                log.info("Order Line Item: Product ID: {}, Quantity: {}, Product Type: {}, Name: {}, Price: {}",
+                        item.getProductId(), item.getQuantity(), item.getProductType(), item.getName(), item.getPrice());
+            });
+        }
 
 
     }

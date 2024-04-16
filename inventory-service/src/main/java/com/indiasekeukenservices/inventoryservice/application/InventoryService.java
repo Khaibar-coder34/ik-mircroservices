@@ -25,6 +25,8 @@ public class InventoryService {
                                 .productId(inventory.getProductId())
                                 .isInStock(inventory.getInStock())
                                 .productType(inventory.getProductType())
+                                .name(inventory.getName())
+                                .price(inventory.getPrice())
                                 .build()
                 ).toList();
     }

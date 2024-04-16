@@ -18,4 +18,8 @@ public class OrderLineItems {
     private Long id;
     private String productId;
     private Integer quantity;
+    private String productType;
+    private String name;
+    private BigDecimal price;
+
 }
