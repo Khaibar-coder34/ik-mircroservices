@@ -4,8 +4,11 @@ import com.indiasekeukenservices.kitchenservice.application.KitchenOrderService;
 import com.indiasekeukenservices.kitchenservice.domain.ProductType;
 import com.indiasekeukenservices.kitchenservice.presentation.dto.KitchenOrderDto;
 import com.indiasekeukenservices.kitchenservice.presentation.dto.KitchenOrderLineItemDto;
+import com.indiasekeukenservices.kitchenservice.presentation.dto.KitchenOrderStatusUpdateDto;
 import com.indiasekeukenservices.kitchenservice.presentation.dto.PreparationStatusUpdateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +58,19 @@ public class KitchenOrderController {
     public void updateOrderLineItemsByPreparationStatus(@PathVariable Long id, @RequestBody PreparationStatusUpdateDto status) {
         kitchenOrderService.updateOrderLineItemsByPreparationStatus(id, status.getStatus());
     }
+
+    @PatchMapping("/order/{orderId}/status")
+    public ResponseEntity<?> updateOrderStatus(@PathVariable Long orderId, @RequestBody KitchenOrderStatusUpdateDto statusUpdateDto) {
+        try {
+            kitchenOrderService.updateOrderStatus(orderId, statusUpdateDto.getStatus());
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the order status.");
+        }
+    }
+
 
     @GetMapping("/orders/day")
     public List<KitchenOrderDto> getOrdersOfTheDay() {

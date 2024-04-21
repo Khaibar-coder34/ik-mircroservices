@@ -91,6 +91,14 @@ public class KitchenOrderService {
         kitchenOrderLineItemRepository.save(lineItem);
     }
 
+    public void updateOrderStatus(Long orderId, KitchenOrderStatus newStatus) {
+        KitchenOrder order = kitchenOrderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
+        order.setOrderStatus(newStatus);
+        kitchenOrderRepository.save(order);
+    }
+
+
     public List<KitchenOrder> getOrdersOfTheDay() {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1);

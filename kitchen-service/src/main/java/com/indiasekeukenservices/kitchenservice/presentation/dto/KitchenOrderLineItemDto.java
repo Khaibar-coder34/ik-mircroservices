@@ -15,6 +15,8 @@ public class KitchenOrderLineItemDto {
     private String productType;
     private String name;
     private BigDecimal price;
+    private String preparationStatus;
+
 
 
     public static KitchenOrderLineItemDto fromEntity(KitchenOrderLineItem lineItem) {
@@ -26,6 +28,7 @@ public class KitchenOrderLineItemDto {
         dto.setName(lineItem.getName());
         dto.setPrice(lineItem.getPrice());
         dto.setProductType(lineItem.getProductType().name());
+        dto.setPreparationStatus(lineItem.getPreparationStatus().name());
         return dto;
     }
 }

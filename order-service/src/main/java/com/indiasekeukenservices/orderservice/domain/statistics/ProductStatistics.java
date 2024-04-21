@@ -1,4 +1,4 @@
-package com.indiasekeukenservices.orderservice.domain;
+package com.indiasekeukenservices.orderservice.domain.statistics;
 
 import lombok.Data;
 import lombok.Setter;
@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 @Setter
 @Data
 public class ProductStatistics {
-    // Getters and setters
     private String name;
     private BigDecimal revenue;
     private long count;

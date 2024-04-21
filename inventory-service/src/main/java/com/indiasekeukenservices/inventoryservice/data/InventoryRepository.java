@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     List<Inventory> findByProductIdIn(List<String> skuCode);
+    Optional<Inventory> findByProductId(String productId);
 }

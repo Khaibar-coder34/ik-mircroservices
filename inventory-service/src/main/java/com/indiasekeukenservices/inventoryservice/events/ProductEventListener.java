@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ProductEventListener {
 
-    // Eventueel andere benodigde afhankelijkheden injecteren
     private final InventoryRepository inventoryRepository;
 
     public ProductEventListener(InventoryRepository inventoryRepository) {
@@ -31,5 +30,31 @@ public class ProductEventListener {
 
         inventoryRepository.save(inventory);
         log.info("PRODUCT SAVED in Inventory record for product ID: " + event.getId());
+    }
+
+    @KafkaListener(topics = "productUpdatedTopic", groupId = "inventory-group")
+    public void onProductUpdated(ProductUpdatedEvent event) {
+        log.info("Received product updated event for product ID: " + event.getId());
+
+        Inventory inventory = inventoryRepository.findByProductId(event.getId())
+                .orElseThrow(() -> new RuntimeException("Inventory record not found for product ID: " + event.getId()));
+
+        inventory.setName(event.getName());
+        inventory.setProductType(event.getProductType());
+        inventory.setPrice(event.getPrice());
+
+        inventoryRepository.save(inventory);
+        log.info("Inventory record updated for product ID: " + event.getId());
+    }
+
+    @KafkaListener(topics = "productDeletedTopic", groupId = "inventory-group")
+    public void onProductDeleted(ProductDeletedEvent event) {
+        log.info("Received product deleted event for product ID: " + event.getId());
+
+        Inventory inventory = inventoryRepository.findByProductId(event.getId())
+                .orElseThrow(() -> new RuntimeException("Inventory record not found for product ID: " + event.getId()));
+
+        inventoryRepository.delete(inventory);
+        log.info("Inventory record deleted for product ID: " + event.getId());
     }
 }

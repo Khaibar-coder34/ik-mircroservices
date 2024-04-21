@@ -1,7 +1,8 @@
 package com.indiasekeukenservices.orderservice.presentation;
 
 import com.indiasekeukenservices.orderservice.application.StatisticsService;
-import com.indiasekeukenservices.orderservice.domain.ProductStatistics;
+import com.indiasekeukenservices.orderservice.domain.statistics.OrderStatistics;
+import com.indiasekeukenservices.orderservice.domain.statistics.ProductStatistics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -49,4 +50,25 @@ public class StatisticsController {
         return ResponseEntity.ok(statisticsService.getTopSellingProducts(start, end));
     }
 
+
+    @GetMapping("/order-statistics")
+    public ResponseEntity<OrderStatistics> getOrderStatistics(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return ResponseEntity.ok(statisticsService.getOrderStatistics(start, end));
+    }
+
+    @GetMapping("/product-statistics")
+    public ResponseEntity<List<ProductStatistics>> getProductStatistics(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return ResponseEntity.ok(statisticsService.getProductStatistics(start, end));
+    }
+
+    @GetMapping("/peak-order-times")
+    public ResponseEntity<Map<String, Long>> getPeakOrderTimes(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return ResponseEntity.ok(statisticsService.getPeakOrderTimes(start, end));
+    }
 }
